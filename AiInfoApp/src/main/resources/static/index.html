@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>AI Info Center</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+
+    <header class="topbar">
+        <h1>AI Info Center</h1>
+    </header>
+
+
+    <!-- AUTH -->
+    <section id="authView" class="card">
+        <div class="tabs">
+            <button id="tabLogin" class="tab active" type="button">login</button>
+            <button id="tabRegister" class="tab" type="button">register</button>
+        </div>
+
+        <!-- LOGIN -->
+        <div id="loginBox" class="box">
+            <h2>login</h2>
+
+            <div class="form">
+                <label>email
+                    <input id="loginEmail" type="email" placeholder="ana@gmail.com" autocomplete="off">
+                </label>
+
+                <label>password
+                    <input id="loginPassword" type="password" placeholder="ana">
+                </label>
+
+                <button id="btnLogin" type="button">login</button>
+            </div>
+
+            <pre id="loginResult" class="result"></pre>
+        </div>
+
+        <!-- REGISTER -->
+        <div id="registerBox" class="box hidden">
+            <h2>register</h2>
+
+            <div class="grid2">
+                <label>name
+                    <input id="regName" type="text" placeholder="ana" autocomplete="off">
+                </label>
+
+                <label>email
+                    <input id="regEmail" type="email" placeholder="ana@gmail.com" autocomplete="off">
+                </label>
+
+                <label>password
+                    <input id="regPassword" type="password" placeholder="ana">
+                </label>
+
+                <label>role
+                    <select id="regRole">
+                        <option value="STUDENT">STUDENT</option>
+                        <option value="ADMIN">ADMIN</option>
+                    </select>
+                </label>
+            </div>
+
+            <div id="studentFields" class="grid2">
+                <label>faculty (student only)
+                    <input id="regFaculty" type="text" placeholder="UVT" autocomplete="off">
+                </label>
+
+                <label>yearOfStudy (student only)
+                    <input id="regYearOfStudy" type="number" placeholder="2" min="1" max="10">
+                </label>
+            </div>
+
+            <button id="btnRegister" type="button" class="full">create account</button>
+            <pre id="registerResult" class="result"></pre>
+        </div>
+    </section>
+
+    <!-- DASHBOARD -->
+    <section id="dashView" class="hidden">
+        <div class="card row">
+            <div>
+                <h2>dashboard</h2>
+                <p class="muted">logged in as <b id="whoami">-</b></p>
+            </div>
+            <button id="btnLogout" class="btnGhost" type="button">logout</button>
+        </div>
+
+        <!-- STUDENT -->
+        <section id="studentView" class="card hidden">
+            <h3>student</h3>
+
+            <div id="studentMenu" class="box">
+                <h4>what do you want to do?</h4>
+                <div class="split">
+                    <div class="box">
+                        <h4>conversations</h4>
+                        <p class="muted">create and chat with the AI</p>
+                        <button id="goConv" type="button" class="full">go to conversations</button>
+                    </div>
+
+                    <div class="box">
+                        <h4>requests</h4>
+                        <p class="muted">send a request to the admin</p>
+                        <button id="goReq" type="button" class="full">go to requests</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="studentConvView" class="hidden">
+                <div class="row" style="margin-bottom:10px;">
+                    <h4 style="margin:0;">conversations</h4>
+                    <button id="backToMenu1" type="button" class="btnGhost">back</button>
+                </div>
+
+                <!-- PAGE 1: THREADS -->
+                <div id="threadsPage" class="box">
+                    <h4>threads</h4>
+
+                    <label>new conversation title
+                        <input id="convTitle" type="text" placeholder="my conversation..." autocomplete="off">
+                    </label>
+                    <button id="btnCreateConv" type="button">create</button>
+
+                    <div class="row" style="margin-top:10px;">
+                        <button id="btnLoadConvs" type="button">reload list</button>
+                    </div>
+
+                    <div id="convList" class="list"></div>
+                    <pre id="convResult" class="result"></pre>
+                </div>
+
+                <!-- PAGE 2: CONVERSATION -->
+                <div id="conversationPage" class="box hidden">
+                    <div class="row" style="margin-bottom:10px;">
+                        <div>
+                            <h4>conversation</h4>
+                            <div class="muted">selected: <b id="currentConv">none</b></div>
+                        </div>
+                        <button id="btnBackToThreads" class="btnGhost" type="button">back</button>
+                    </div>
+
+                    <div id="msgList" class="list"></div>
+
+                    <label style="margin-top:10px;">message
+                        <input id="msgText" type="text" placeholder="type message..." autocomplete="off">
+                    </label>
+                    <button id="btnSendMsg" type="button">send</button>
+
+                    <pre id="msgResult" class="result"></pre>
+                </div>
+
+            </div>
+
+            <div id="studentReqView" class="hidden">
+                <div class="row" style="margin-bottom:10px;">
+                    <h4 style="margin:0;">requests</h4>
+                    <button id="backToMenu2" type="button" class="btnGhost">back</button>
+                </div>
+
+                <div class="split">
+                    <div class="box">
+                        <h4>send a request</h4>
+
+                        <button id="btnOpenReqForm" type="button" class="full">I want to send a request</button>
+
+                        <div id="reqForm" class="hidden" style="margin-top:10px;">
+                            <label>message
+                                <input id="reqMsg" type="text" placeholder="write your request..." autocomplete="off">
+                            </label>
+
+                            <div class="row" style="justify-content:flex-start; gap:10px; margin-top:10px;">
+                                <button id="btnSubmitReq" type="button">submit</button>
+                                <button id="btnCancelReq" type="button" class="btnGhost">cancel</button>
+                            </div>
+                        </div>
+
+                        <div class="row" style="justify-content:flex-start; gap:10px; margin-top:12px;">
+                            <button id="btnMyReqs" type="button">load my requests</button>
+                        </div>
+
+                        <div id="myReqList" class="list" style="margin-top:10px;"></div>
+                        <pre id="reqResult" class="result"></pre>
+                    </div>
+
+                    <div class="box">
+                        <h4>notes</h4>
+                        <p class="muted">
+                            - you only write a message<br>
+                            - request type is default (GENERAL)
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ADMIN -->
+        <section id="adminView" class="card hidden">
+            <h3>admin menu</h3>
+
+            <div class="split">
+                <div class="box">
+                    <h4>students</h4>
+                    <button id="btnLoadStudents" type="button">load students</button>
+
+                    <div id="studentList" class="list" style="margin-top:10px;"></div>
+                    <pre id="adminStudentResult" class="result"></pre>
+                </div>
+
+                <div class="box">
+                    <h4>rename selected student</h4>
+                    <div class="muted">selected id: <b id="selectedStudentId">none</b></div>
+
+                    <label>name
+                        <input id="editStudentName" type="text" placeholder="name">
+                    </label>
+
+                    <button id="btnSaveStudent" type="button">save</button>
+                    <pre id="adminEditResult" class="result"></pre>
+                </div>
+            </div>
+
+            <div class="box" style="margin-top:12px;">
+                <h4>requests</h4>
+                <button id="btnLoadAllReq" type="button">load requests</button>
+                <div id="adminReqList" class="list" style="margin-top:10px;"></div>
+                <pre id="adminReqResult" class="result"></pre>
+            </div>
+            <div class="box" style="margin-top:12px;">
+                <h4>student ai conversations (admin)</h4>
+                <p class="muted">select a student, then load their ai conversations</p>
+
+                <div class="split">
+                    <!-- conversations list -->
+                    <div class="box">
+                        <div class="row" style="justify-content:space-between; align-items:center;">
+                            <b>conversations</b>
+                            <button id="btnAdminLoadConvs" type="button">load conversations</button>
+                        </div>
+
+                        <div id="adminConvList" class="list" style="margin-top:10px;"></div>
+                        <pre id="adminConvResult" class="result"></pre>
+                    </div>
+
+                    <!-- messages -->
+                    <div class="box">
+                        <div class="muted">
+                            selected conversation:
+                            <b id="adminCurrentConv">none</b>
+                        </div>
+
+                        <div id="adminMsgList" class="list" style="margin-top:10px;"></div>
+                        <pre id="adminMsgResult" class="result"></pre>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </section>
+
+    <footer class="footer">
+        <span class="muted">tip:</span>
+        <span class="muted">run backend on <b>http://localhost:8080</b>, then open the same url in browser.</span>
+    </footer>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<!-- cache bust: daca schimbi app.js, cresti v ca sa nu mai tina browserul minte versiunea veche -->
+<script src="app.js?v=2"></script>
+</body>
+</html>
